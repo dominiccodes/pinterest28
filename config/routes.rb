@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-	resource :pins
+	resources :pins
 	
-	get 'pins/index'
+#	get 'pins/index'
   
 	root 'pins#index'
 
