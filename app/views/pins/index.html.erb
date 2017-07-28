@@ -1,2 +1,8 @@
-<h1>Pinovate</h1>
-<p>Pin your favorite motivational quote images here.</p>
+<% @pins.each do |pin| %>
+<%= link_to pin.title, pin %>
+<% end %>
+
+
+<%= link_to "New Pin", new_pin_path %> 
+
+
