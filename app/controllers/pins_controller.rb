@@ -1,42 +1,48 @@
 class PinsController < ApplicationController
-	  before_action :find_pin, only: [:show, :edit, :update] 
-	  before_action :authenticate_user!, except: [:index, :show] 
+  before_action :find_pin, only: [:show, :edit, :update, :destroy, :upvote] 
+  before_action :authenticate_user!, except: [:index, :show]
 
-	def index
-		@pins = Pin.all.order("created_at DESC")
+  def index
+  	@pins = Pin.all.order("created_at DESC")
+  end
+
+
+  def show
+
+  end
+
+  def new
+  	@pin = current_user.pins.build
+  end
+
+
+  def create
+  	@pin = current_user.pins.build(pin_params)
+
+  	if 	@pin.save
+  		redirect_to @pin 
+  	else
+  		render "new"
+  	end
+  end
+
+  def edit
+
   end
 	
-	def show
+  def update
+  	if @pin.update(pin_params)
+  		redirect_to @pin
+  	else
+  		render "edit"
+  	end
+  end
 	
-	end
+	  def destroy
+    @pin.destroy
+    redirect_to root_path
+  end
 
-	def new
-		@pin = current_user.pins.build
-	end
-	
-	def create
-	 	 @pin = current_user.pins.build(pin_params)
-	if @pin.save
-		redirect_to @pin
-	else
-		render "new"
-	end
-		
-	def edit
-	
-	end
-	
-	def update
-		if @pin.update(pin_params)
-			redirect_to @pin
-		else
-			render "edit"
-	end
-	end
-end
-	
-
-	
 	private
 	
 	def pin_params 
@@ -46,9 +52,6 @@ end
 	def find_pin
 		@pin = Pin.find(params[:id])
 	end
-	
-	
-	
 end
 	
 

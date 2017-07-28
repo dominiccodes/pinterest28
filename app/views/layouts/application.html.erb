@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Pinterest</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,9 +10,27 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <%= yield %>
+  	<form class="nav-form navbar-default">
+			<div class="container">
+				<%= link_to "Pinterest", root_path, class:"navbar-brand" %>
+					<div class="navbar-form navbar-right">
+   
+						<% if user_signed_in? %>
+						<%= link_to "Create new pin", new_pin_path, class:"btn btn-primary"%>
+						<%= link_to "Account Settings", edit_user_registration_path, class:"btn btn-primary" %>
+						<%= link_to "Log Out", destroy_user_session_path, method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-primary" %>
+						<% else %>
+						<%= link_to "Sign Up", new_user_registration_path, class:"btn btn-primary"%>
+						<%= link_to "Sign In", new_user_session_path, class:"btn btn-primary" %>
+						<% end %>
+				</div>
+			</div>
+						
+				</form>
+				<div class="container">
+				<p class="notice"><%= notice %></p>
+					<p class="alert"><%= alert %></p>
+				<%= yield %>
+				</div>
   </body>
 </html>
